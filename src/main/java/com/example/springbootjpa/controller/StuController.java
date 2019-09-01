@@ -49,4 +49,11 @@ public class StuController {
         stu.setId(id);
         return stuService.update(stu);
     }
+
+    @PostMapping("/stus/update/{id}")
+    public int updateName(@PathVariable Integer id,@RequestBody String json){
+        Stu stu = stuService.findById(id);
+        JSONObject jsonObject = JSON.parseObject(json);
+        return stuService.updateName(id, jsonObject.getString("name"));
+    }
 }
