@@ -1,5 +1,7 @@
 package com.example.springbootjpa.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.springbootjpa.entity.Stu;
 import com.example.springbootjpa.service.StuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,9 @@ public class StuController {
         return stuService.create(stu);
     }
 
-    @PutMapping("/stus")
-    public Stu update(@RequestBody Stu stu){
+    @PutMapping("/stus/{id}")
+    public Stu update(@PathVariable Integer id,@RequestBody Stu stu){
+        stu.setId(id);
         return stuService.update(stu);
     }
 
@@ -38,4 +41,12 @@ public class StuController {
         stuService.delete(id);
     }
 
+    @PutMapping("/stus/test/{id}")
+    public Stu updateTest(@PathVariable Integer id,@RequestBody String json){
+        Stu stu = stuService.findById(id);
+        JSONObject jsonObject = JSON.parseObject(json);
+        stu.setAge(jsonObject.getInteger("age"));
+        stu.setId(id);
+        return stuService.update(stu);
+    }
 }

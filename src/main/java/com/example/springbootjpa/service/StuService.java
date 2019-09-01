@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Description: java类作用描述
@@ -32,5 +33,10 @@ public class StuService {
 
     public void delete(int id){
         stuRepository.deleteById(id);
+    }
+
+    public Stu findById(Integer id) {
+        Stu stu = stuRepository.findByStuId(id);
+        return stu;
     }
 }
